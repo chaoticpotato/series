@@ -4,10 +4,9 @@ import viteLogo from "/vite.svg";
 */
 import "./reset.css";
 import "./App.css";
-
-import { Switch, Route, Link } from "react-router-dom";
-
+import { Switch, Route } from "react-router-dom";
 import Anasayfa from "./components/Anasayfa";
+import SeriesDetails from "./components/SeriesDetails";
 
 function App() {
   return (
@@ -16,14 +15,9 @@ function App() {
         <Route path="/" exact>
           <Anasayfa />
         </Route>
-        <Route path="/details/game-of-thrones">
+        <Route path="/details/:name">
           {/* detay sayfası */}
-          <div className="details-container">
-            <div className="details">
-              <h2>Dizi detay</h2>
-              <Link to="/">Ana sayfaya dön</Link>
-            </div>
-          </div>
+          <SeriesDetails />
         </Route>
       </Switch>
     </main>

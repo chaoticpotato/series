@@ -1,11 +1,12 @@
-export default function SeriesItem(props) {
+export default function SeriesItem({ item, handlePreview, handleRemove }) {
   return (
     <div className="series-item">
-      <img src={props.item.image_thumbnail_path} alt="Dizi afiş" />
+      <img src={item.image_thumbnail_path} alt="Dizi afiş" />
       <div>
-        <h3>{props.item.name}</h3>
-        {/* <button onClick={() => props.handleChange(props.item)}>İncele</button> */}
-        <button onClick={props.handleChange}>İncele</button>
+        <h3>{item.name}</h3>
+
+        {handlePreview && <button onClick={handlePreview}>İncele</button>}
+        {handleRemove && <button onClick={handleRemove}>Çıkar</button>}
       </div>
     </div>
   );

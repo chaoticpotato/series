@@ -35,7 +35,7 @@ h2 {
   background-color: #efefef;
 }
 .right-column {
-  background-color: white;
+  background-color: #efefef;
 }
 
 .preview-content {
@@ -55,6 +55,13 @@ h2 {
 .preview-content img {
   border-radius: 1.5rem;
   flex: 2;
+}
+
+.empty-preview {
+  font-size: 1.5rem;
+  flex: 1;
+  text-align: center;
+  padding: 3rem 1rem;
 }
 
 .preview {
@@ -96,6 +103,12 @@ h2 {
   max-width: 800px;
   height: 400px;
   background-color: white;
+}
+
+.loading {
+  width: 6rem;
+  display: block;
+  margin: 6.5rem auto 0 auto;
 }
 
 .series-item {
