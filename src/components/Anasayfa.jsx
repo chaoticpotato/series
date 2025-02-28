@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import SeriesItem from "./SeriesItem";
 import PreviewItem from "./PreviewItem";
 
-export default function Anasayfa() {
+export default function Anasayfa({ myList, addToMyList, removeFromMyList }) {
   const [series, setSeries] = useState(null);
-  const [myList, setMyList] = useState([]);
+  const [page, setPage] = useState(1);
 
   const [previewItem, setPreviewItem] = useState(null);
 
   useEffect(() => {
     axios
-      .get("https://www.episodate.com/api/most-popular?page=1")
+      .get(`https://www.episodate.com/api/most-popular?page=${page}`)
       .then((response) => {
         // handle success
         setSeries(response.data.tv_shows);
@@ -19,21 +20,16 @@ export default function Anasayfa() {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [page]);
+
+  function updatePage(newPage) {
+    if (newPage < 1) return;
+    setPage(newPage);
+  }
 
   function updatePreviewItem(item) {
     console.log("dizi değişti");
     setPreviewItem(item);
-  }
-
-  function addToMyList(item) {
-    const newList = [item, ...myList];
-    setMyList(newList);
-  }
-
-  function removeFromMyList(item) {
-    const newList = myList.filter((dizi) => dizi.id !== item.id);
-    setMyList(newList);
   }
 
   return (
@@ -51,6 +47,13 @@ export default function Anasayfa() {
                   />
                 ))
               : "diziler yükleniyor"}
+          </div>
+          <div className="seriesList-footer">
+            <button onClick={() => updatePage(page - 1)} disabled={page === 1}>
+              Geri
+            </button>
+            <div>{page}</div>
+            <button onClick={() => updatePage(page + 1)}>İleri</button>
           </div>
         </div>
       </div>
@@ -81,7 +84,7 @@ export default function Anasayfa() {
 
       <div className="right-column">
         <div className="scroll-helper">
-          <h2>İzlemek istediklerim</h2>
+          <h2>İzlemek istediklerim ({myList.length})</h2>
           <div className="scroll-area">
             {myList.map((dizi) => (
               <SeriesItem
@@ -90,6 +93,12 @@ export default function Anasayfa() {
                 handleRemove={() => removeFromMyList(dizi)}
               />
             ))}
+          </div>
+          <div className="myList-footer">
+            <span>Listede yok mu?</span>
+            <Link to="/add-series" className="button">
+              Ekle
+            </Link>
           </div>
         </div>
       </div>
